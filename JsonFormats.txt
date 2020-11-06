@@ -1,0 +1,34 @@
+Update Password json format: 
+{
+  "data": {
+    "oldPass": "test@123",
+    "newPass": "admin123"
+  }
+}
+
+Update Bio json format:
+{
+  "data": {
+    "Bio": "Hello I updated my bio"
+  }
+}
+
+Login json format:
+{
+  "data" : {
+    "email" : "HeenaDoshi1@gmail.com",
+    "password" : "test@123"
+  }
+}
+
+Register json format:
+{
+  "data" : {
+    "user_id" : "Rajesh.Doshi",
+    "first_name" : "Rajesh",
+    "last_name" : "Doshi",
+    "email" : "Rajeshdoshi321@gmail.com",
+    "password" : "test@123",
+    "bio" : "Hello
+  }
+}
