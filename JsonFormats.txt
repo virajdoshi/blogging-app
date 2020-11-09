@@ -16,7 +16,7 @@ Update Bio json format:
 Login json format:
 {
   "data" : {
-    "email" : "HeenaDoshi1@gmail.com",
+    "email" : "test@gmail.com",
     "password" : "test@123"
   }
 }
@@ -24,11 +24,11 @@ Login json format:
 Register json format:
 {
   "data" : {
-    "user_id" : "Rajesh.Doshi",
-    "first_name" : "Rajesh",
-    "last_name" : "Doshi",
-    "email" : "Rajeshdoshi321@gmail.com",
+    "user_id" : "adam.paul",
+    "first_name" : "adam",
+    "last_name" : "paul",
+    "email" : "test@gmail.com",
     "password" : "test@123",
-    "bio" : "Hello
+    "bio" : "Hello"
   }
 }
