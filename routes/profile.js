@@ -5,4 +5,6 @@ var auth = require('./auth');
 
 router.get('/:userid', profileController.getprofile);
 
+router.post('/:userid/follow', auth.required, profileController.follow);
+
 module.exports = router;
