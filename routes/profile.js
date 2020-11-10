@@ -7,4 +7,6 @@ router.get('/:userid', profileController.getprofile);
 
 router.post('/:userid/follow', auth.required, profileController.follow);
 
+router.delete('/:userid/follow', auth.required, profileController.unfollow);
+
 module.exports = router;
