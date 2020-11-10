@@ -11,5 +11,11 @@ module.exports = {
         profile.follow(req.con, req.payload, req.params.userid, function(result){
             res.json(result);
         })
+    },
+
+    unfollow: function(req, res){
+        profile.unfollow(req.con, req.payload, req.params.userid, function(result){
+            res.json(result);
+        })
     }
 }
