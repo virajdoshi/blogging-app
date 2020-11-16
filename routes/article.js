@@ -5,4 +5,6 @@ var auth = require('./auth');
 
 router.post('/create', auth.required, articleController.create);
 
+router.put('/update', auth.required, articleController.update);
+
 module.exports = router;

@@ -8,5 +8,22 @@ module.exports = {
                 })
             })
         })
+    },
+
+    update: async function(con, payload, data){
+        return new Promise(function(resolve) {
+            con.query("select user_id from user_info where email = ?", payload.email, function(err, result, fields){
+                con.query("update articles set title = ?, description = ?, body = ? where author = ? and article_id = ?", [data.data.title, data.data.description, data.data.body, result[0].user_id, data.data.article_id], function(err, res, fields){
+                    if(res.affectedRows === 0){
+                        resolve("Message : The article is not updated check your article_id and try again.");
+                    }
+                    else{
+                        con.query("select * from articles where author = ? and article_id = ?", [result[0].user_id, data.data.article_id], function(err, r, fields){
+                            resolve(r[0]);
+                        })
+                    }
+                })
+            })
+        })
     }
 }
