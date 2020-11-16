@@ -25,5 +25,20 @@ module.exports = {
                 })
             })
         })
+    },
+
+    delete: async function(con, payload, data){
+        return new Promise(function(resolve) {
+            con.query("select user_id from user_info where email = ?", payload.email, function(err, result, fields){
+                con.query("delete from articles where article_id = ? and author = ?", [data, result[0].user_id], function(err, res, fields){
+                    if(res.affectedRows === 0){
+                        resolve("Message : The article is not deleted check your article_id and try again.");
+                    }
+                    else{
+                        resolve("Message : The article is succesfully deleted");
+                    }
+                })
+            })
+        })
     }
 }
