@@ -19,5 +19,10 @@ module.exports = {
             let result = await article.update(req.con, req.payload, req.body);
             res.json(result);
         }
+    },
+
+    delete: async function(req, res){
+        let result = await article.delete(req.con, req.payload, req.params.id);
+        res.json(result);
     }
 }

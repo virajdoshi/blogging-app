@@ -7,4 +7,6 @@ router.post('/create', auth.required, articleController.create);
 
 router.put('/update', auth.required, articleController.update);
 
+router.delete('/:id', auth.required, articleController.delete);
+
 module.exports = router;
