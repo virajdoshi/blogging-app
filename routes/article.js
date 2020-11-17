@@ -16,4 +16,6 @@ router.get('/', articleController.listByAuthor);
 
 router.get('/list/all', articleController.listAll);
 
+router.get('/feed/page', auth.required, articleController.feed);
+
 module.exports = router;

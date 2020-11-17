@@ -79,5 +79,32 @@ module.exports = {
                 }
             })
         })
+    },
+
+    feed: async function(con, payload){
+        var feedArticles = [];
+        return new Promise(function(resolve){
+            con.query("select user_id from user_info where email = ?", payload.email, function(err, result, fields){
+                con.query("select following_user_id from following where user_id = ?", result[0].user_id, function(err, res, fields){
+                    if(res.length === 0){
+                        resolve("Message : follow any users to see your feed.")
+                    }
+                    else{
+                        for(var i = 0; i<res.length; i++){
+                            feedArticles.push(new Promise(function(resolve, reject){
+                                con.query("select title, description, body from articles where author = ?", res[i].following_user_id, function(err, r, fields){
+                                    if(err) reject(err)
+                                    var articles = r
+                                    resolve(articles);
+                                })
+                            }))
+                        }
+                        Promise.all(feedArticles).then(function(results) {
+                            resolve(results);
+                        });
+                    }
+                })
+            })
+        })
     }
 }

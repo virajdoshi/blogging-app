@@ -39,5 +39,10 @@ module.exports = {
     listAll: async function(req, res){
         let result = await article.listAll(req.con);
         res.json(result);
+    },
+
+    feed: async function(req, res){
+        let result = await article.feed(req.con, req.payload);
+        res.json(result);
     }
 }
