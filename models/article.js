@@ -40,5 +40,44 @@ module.exports = {
                 })
             })
         })
+    },
+
+    getArticle: async function(con, data){
+        return new Promise(function(resolve) {
+            con.query("select article_id, title, description, body, author from articles where article_id = ?", data, function(err, result, fields){
+                if(result.length === 0){
+                    resolve("Message : The article you are trying to read is not available. Check your article ID and try again.");
+                }
+                else{
+                    resolve(result[0]);
+                }
+            }) 
+        })
+    },
+
+    listByAuthor: async function(con, data){
+        return new Promise(function(resolve){
+            con.query("select article_id, title from articles where author = ?", data, function(err, result, fields){
+                if(result.length === 0){
+                    resolve("Message : Author never published any articles.");
+                }
+                else{
+                    resolve(result);
+                }
+            })
+        })
+    },
+
+    listAll: async function(con){
+        return new Promise(function(resolve){
+            con.query("select article_id, title from articles", function(err, result, fields){
+                if(result.length === 0){
+                    resolve("Message : At this moment no articles is available");
+                }
+                else{
+                    resolve(result);
+                }
+            })
+        })
     }
 }

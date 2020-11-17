@@ -24,5 +24,20 @@ module.exports = {
     delete: async function(req, res){
         let result = await article.delete(req.con, req.payload, req.params.id);
         res.json(result);
+    },
+
+    getArticle: async function(req, res){
+        let result = await article.getArticle(req.con, req.params.id);
+        res.json(result);
+    },
+
+    listByAuthor: async function(req, res){
+        let result = await article.listByAuthor(req.con, req.query.author);
+        res.json(result);
+    },
+
+    listAll: async function(req, res){
+        let result = await article.listAll(req.con);
+        res.json(result);
     }
 }
