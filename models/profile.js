@@ -48,7 +48,14 @@ module.exports = {
                 else{
                     con.query("delete from following where user_id in(select user_id from user_info where email = ?) and following_user_id = ?", [payload.email, uid], function(err, result, fields){
                         con.query("select user_info.user_id, user_info.bio, count(following.following_user_id) as following from user_info inner join following on user_info.user_id = following.user_id where user_info.email = ?", payload.email, function(err, result, fields){
-                            resolve({user_id : result[0].user_id, bio : result[0].bio, following : result[0].following})
+                            if(result[0].user_id === null){
+                                con.query("select user_id, bio from user_info where user_id = ?", uid, function(err, result, fields){
+                                    resolve({user_id : result[0].user_id, bio : result[0].bio, following : 0})
+                                })
+                            }
+                            else{
+                                resolve({user_id : result[0].user_id, bio : result[0].bio, following : result[0].following})
+                            }
                         })
                     })
                 }
