@@ -1,5 +1,7 @@
 const article = require('../models/article.js');
 
+//calls the function and return the result 
+//If the POST or PUT request inculded then we are also checking it should not be empty
 module.exports = {
     create: async function(req, res){
         if(!req.body.data.title || !req.body.data.description || !req.body.data.body){

@@ -1,4 +1,6 @@
 module.exports = {
+
+    //create an article required jwt token and data
     create: async function(con, payload, data){
         return new Promise(function(resolve) {
             con.query("select user_id from user_info where email = ?", payload.email, function(err, result, fields){
@@ -10,9 +12,13 @@ module.exports = {
         })
     },
 
+
+    //update article required jwt token and data
     update: async function(con, payload, data){
         return new Promise(function(resolve) {
             con.query("select user_id from user_info where email = ?", payload.email, function(err, result, fields){
+                
+                //updating article based on author name and artile id 
                 con.query("update articles set title = ?, description = ?, body = ? where author = ? and article_id = ?", [data.data.title, data.data.description, data.data.body, result[0].user_id, data.data.article_id], function(err, res, fields){
                     if(res.affectedRows === 0){
                         resolve("Message : The article is not updated check your article_id and try again.");
@@ -27,6 +33,7 @@ module.exports = {
         })
     },
 
+    //delete an article based on article id and author with proper jwt token
     delete: async function(con, payload, data){
         return new Promise(function(resolve) {
             con.query("select user_id from user_info where email = ?", payload.email, function(err, result, fields){
@@ -42,6 +49,7 @@ module.exports = {
         })
     },
 
+    //retrive an article with its id
     getArticle: async function(con, data){
         return new Promise(function(resolve) {
             con.query("select article_id, title, description, body, author from articles where article_id = ?", data, function(err, result, fields){
@@ -55,6 +63,7 @@ module.exports = {
         })
     },
 
+    //retrive all articles of specific author 
     listByAuthor: async function(con, data){
         return new Promise(function(resolve){
             con.query("select article_id, title from articles where author = ?", data, function(err, result, fields){
@@ -68,6 +77,7 @@ module.exports = {
         })
     },
 
+    //list all article
     listAll: async function(con){
         return new Promise(function(resolve){
             con.query("select article_id, title from articles", function(err, result, fields){
@@ -81,15 +91,20 @@ module.exports = {
         })
     },
 
+    //feed will only work if user follow to another user
     feed: async function(con, payload){
         var feedArticles = [];
         return new Promise(function(resolve){
             con.query("select user_id from user_info where email = ?", payload.email, function(err, result, fields){
+               
+                //retive all the following user name to create the feed
                 con.query("select following_user_id from following where user_id = ?", result[0].user_id, function(err, res, fields){
                     if(res.length === 0){
                         resolve("Message : follow any users to see your feed.")
                     }
                     else{
+
+                        //to show the feed retive all the articles for following user and store it in array and return the feed
                         for(var i = 0; i<res.length; i++){
                             feedArticles.push(new Promise(function(resolve, reject){
                                 con.query("select title, description, body from articles where author = ?", res[i].following_user_id, function(err, r, fields){

@@ -1,5 +1,6 @@
 const profile = require("../models/profile.js");
 
+//calls the function and return the result
 module.exports = {
     getprofile: async function(req, res){
         let result = await profile.getprofile(req.con, req.params.userid)

@@ -1,6 +1,8 @@
 const user = require("../models/user.js");
 
 module.exports = {
+
+    //Register function checks the json format is empty or not if its proper the it will send the data to user.register function
     register: async function(req, res) {
       if(!req.body.data.user_id || !req.body.data.first_name || !req.body.data.last_name || !req.body.data.email || !req.body.data.password){
         return res.status(422).json({errors: {errors: "Fields can't be blank"}});
@@ -11,6 +13,7 @@ module.exports = {
       }
     },
 
+    //login function checks the json format is empty or not if its proper the it will send the data to user.login function
     login: async function(req, res) {
       if(!req.body.data.email){
         return res.status(422).json({errors: {email: "can't be blank"}});
@@ -24,11 +27,13 @@ module.exports = {
       }
     },
 
+    //simply calls the user.getuser function because it is GET request
     getuser: async function(req, res){
       let result = await user.getuser(req.con, req.payload)
       res.json(result);
     },
 
+    //Update function checks the json format is empty or not if its proper the it will send the data to user.update function
     update: async function(req,res){
       var obj = req.body.data;
       if(obj.hasOwnProperty('oldPass') && obj.hasOwnProperty('newPass'))
